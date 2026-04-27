@@ -1,22 +1,23 @@
 from telegram.ext import ApplicationBuilder , CommandHandler , ContextTypes
 from telegram import Update
 
+import sys
+import os
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from Controllers.todoController import TodoController
 from dotenv import load_dotenv
 import os
 
 load_dotenv() 
 
-token = os.getenv("BOT_TOKEN")
+TOKEN = os.getenv("BOT_TOKEN")
 
-async def say_hello(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("Hello World!")
+application = ApplicationBuilder().token(TOKEN).build()
 
-async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(update.message.text)
-    
-
-application = ApplicationBuilder().token(token).build()
-
-application.add_handler( CommandHandler("start" , say_hello ))
+application.add_handler( CommandHandler("add" , TodoController.add_todo ))
+application.add_handler( CommandHandler("list" , TodoController.list_todos))
 
 application.run_polling(allowed_updates=Update.ALL_TYPES)
+ 
