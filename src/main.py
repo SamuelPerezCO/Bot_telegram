@@ -8,7 +8,6 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from Controllers.todoController import TodoController
 from dotenv import load_dotenv
-import os
 
 load_dotenv() 
 
